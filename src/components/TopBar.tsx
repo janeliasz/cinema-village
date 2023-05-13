@@ -40,11 +40,11 @@ const menuItems = [
   },
   {
     name: "about",
-    to: "/about",
+    to: "/",
   },
   {
     name: "contact",
-    to: "/contact",
+    to: "/",
   },
 ];
 

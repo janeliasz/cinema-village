@@ -3,6 +3,8 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
+import { ThemeProvider } from "@emotion/react";
+import theme from "./theme";
 import Layout from "./components/Layout";
 import Shows from "./routes/shows/Shows";
 
@@ -28,7 +30,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  );
 }
 
 export default App;
