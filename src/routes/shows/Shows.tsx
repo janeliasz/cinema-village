@@ -1,11 +1,11 @@
+import Container from "@mui/material/Container";
 import ShowsTabs from "./ShowsTabs";
 
 function Shows() {
   return (
-    <>
-      <div>shows</div>
+    <Container>
       <ShowsTabs />
-    </>
+    </Container>
   );
 }
 
