@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-type ShowDate = {
+export type ShowDate = {
   year: number;
   month: number;
   day: number;
@@ -9,9 +9,11 @@ type ShowDate = {
 export const showsApi = createApi({
   reducerPath: "shows",
   baseQuery: fetchBaseQuery({ baseUrl: "https://dummyjson.com/products" }),
+  tagTypes: ["Shows"],
   endpoints: (builder) => ({
     getShowsByDate: builder.query<unknown, ShowDate>({
       query: (date) => `${date.day}`,
+      providesTags: ["Shows"],
     }),
   }),
 });
