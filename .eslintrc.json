@@ -25,6 +25,7 @@
         "optionalDependencies": false,
         "peerDependencies": false
       }
-    ]
+    ],
+    "@typescript-eslint/no-use-before-define": 0
   }
 }
