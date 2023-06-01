@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import Shows from "./routes/shows/Shows";
+import Reserve from "./routes/reserve/Reserve";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
             path: "shows",
             element: <Shows />,
           },
+          {
+            path: "reserve/:id",
+            element: <Reserve />
+          }
         ],
       },
     ],
