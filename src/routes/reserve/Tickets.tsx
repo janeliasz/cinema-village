@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -8,18 +8,22 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-enum TicketType {
+export enum TicketType {
   Normal = "Normalny",
   Premium = "Premium",
   Student = "Studencki",
   Senior = "Senior",
 }
+
+export type SelectedTicket = {
+  type: TicketType;
+  numOfTickets: number;
+};
 
 const ticketPrices = {
   [TicketType.Normal]: 26,
@@ -28,11 +32,15 @@ const ticketPrices = {
   [TicketType.Senior]: 21,
 };
 
-function Tickets({ goNext }: { goNext: () => void }) {
-  const [selectedTickets, setSelectedTickets] = useState<
-    { type: TicketType; numOfTickets: number }[]
-  >([{ type: TicketType.Normal, numOfTickets: 2 }]);
-
+function Tickets({
+  goNext,
+  selectedTickets,
+  setSelectedTickets,
+}: {
+  goNext: () => void;
+  selectedTickets: SelectedTicket[];
+  setSelectedTickets: React.Dispatch<React.SetStateAction<SelectedTicket[]>>;
+}) {
   const selectedTypes = selectedTickets.map(({ type }) => type);
   const typesToSelect = [
     TicketType.Normal,
@@ -84,150 +92,141 @@ function Tickets({ goNext }: { goNext: () => void }) {
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
+        width: { xs: "95%", md: "50%" },
       }}
     >
-      <Stack
-        alignItems="center"
-        sx={{
-          marginTop: { xs: 2, md: 6 },
-          width: { xs: "95%", md: "50%" },
-        }}
-      >
-        <Grid container>
-          <Grid
-            item
-            xs={4}
-            sx={{
-              marginBottom: { xs: 1, md: 3 },
-            }}
-          >
-            <Typography sx={{ fontWeight: "bold" }}>RODZAJ</Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography sx={{ textAlign: "center", fontWeight: "bold" }}>
-              LICZBA
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography sx={{ textAlign: "right", fontWeight: "bold" }}>
-              CENA
-            </Typography>
-          </Grid>
+      <Grid container>
+        <Grid
+          item
+          xs={4}
+          sx={{
+            marginBottom: { xs: 1, md: 3 },
+          }}
+        >
+          <Typography sx={{ fontWeight: "bold" }}>RODZAJ</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography sx={{ textAlign: "center", fontWeight: "bold" }}>
+            LICZBA
+          </Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography sx={{ textAlign: "right", fontWeight: "bold" }}>
+            CENA
+          </Typography>
+        </Grid>
 
-          {selectedTickets.map(({ type, numOfTickets }, rowIdx) => (
-            <React.Fragment key={type}>
-              <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
-                <IconButton color="error" onClick={() => removeType(type)}>
-                  <DeleteIcon />
-                </IconButton>
-                <FormControl size="small" variant="standard">
-                  <Select
-                    value={type}
-                    onChange={(e) => onTypeChange(e, rowIdx)}
-                    disabled={typesToSelect.length === 0}
-                  >
-                    {[type, ...typesToSelect].map((typeToSelect) => (
-                      <MenuItem key={typeToSelect} value={typeToSelect}>
-                        {typeToSelect}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
+        {selectedTickets.map(({ type, numOfTickets }, rowIdx) => (
+          <React.Fragment key={type}>
+            <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
+              <IconButton color="error" onClick={() => removeType(type)}>
+                <DeleteIcon />
+              </IconButton>
+              <FormControl size="small" variant="standard">
+                <Select
+                  value={type}
+                  onChange={(e) => onTypeChange(e, rowIdx)}
+                  disabled={typesToSelect.length === 0}
+                >
+                  {[type, ...typesToSelect].map((typeToSelect) => (
+                    <MenuItem key={typeToSelect} value={typeToSelect}>
+                      {typeToSelect}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
 
-              <Grid
-                item
-                xs={4}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <TextField
-                  type="number"
-                  InputProps={{ inputProps: { min: 1 } }}
-                  error={numOfTickets < 1}
-                  size="small"
-                  variant="standard"
-                  value={numOfTickets.toString()}
-                  onChange={(e) => {
-                    onNumberChange(e, rowIdx);
-                  }}
-                />
-              </Grid>
-
-              <Grid
-                item
-                xs={4}
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  alignItems: "center",
-                }}
-              >
-                <Typography>
-                  {(numOfTickets * ticketPrices[type]).toFixed(2)} zł
-                </Typography>
-              </Grid>
-            </React.Fragment>
-          ))}
-
-          {selectedTickets.length > 1 && (
             <Grid
               item
-              xs={12}
+              xs={4}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <TextField
+                type="number"
+                InputProps={{ inputProps: { min: 1 } }}
+                error={numOfTickets < 1}
+                size="small"
+                variant="standard"
+                value={numOfTickets.toString()}
+                onChange={(e) => {
+                  onNumberChange(e, rowIdx);
+                }}
+              />
+            </Grid>
+
+            <Grid
+              item
+              xs={4}
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
                 alignItems: "center",
-                marginTop: { xs: 1, md: 3 },
               }}
             >
-              <Typography sx={{ fontWeight: "bold" }}>
-                ŁĄCZNIE:{" "}
-                {selectedTickets
-                  .reduce(
-                    (acc, current) =>
-                      acc + current.numOfTickets * ticketPrices[current.type],
-                    0,
-                  )
-                  .toFixed(2)}{" "}
-                zł
+              <Typography>
+                {(numOfTickets * ticketPrices[type]).toFixed(2)} zł
               </Typography>
             </Grid>
-          )}
+          </React.Fragment>
+        ))}
 
+        {selectedTickets.length > 1 && (
           <Grid
             item
             xs={12}
             sx={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "flex-end",
               alignItems: "center",
               marginTop: { xs: 1, md: 3 },
             }}
           >
-            <Button
-              variant="contained"
-              onClick={addNewType}
-              disabled={typesToSelect.length === 0}
-            >
-              DODAJ WIĘCEJ
-            </Button>
-
-            <Button
-              variant="contained"
-              onClick={goNext}
-              disabled={selectedTickets.length === 0}
-            >
-              DALEJ
-            </Button>
+            <Typography sx={{ fontWeight: "bold" }}>
+              ŁĄCZNIE:{" "}
+              {selectedTickets
+                .reduce(
+                  (acc, current) =>
+                    acc + current.numOfTickets * ticketPrices[current.type],
+                  0,
+                )
+                .toFixed(2)}{" "}
+              zł
+            </Typography>
           </Grid>
+        )}
+
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: { xs: 1, md: 3 },
+          }}
+        >
+          <Button
+            variant="contained"
+            onClick={addNewType}
+            disabled={typesToSelect.length === 0}
+          >
+            DODAJ WIĘCEJ
+          </Button>
+
+          <Button
+            variant="contained"
+            onClick={goNext}
+            disabled={selectedTickets.length === 0}
+          >
+            DALEJ
+          </Button>
         </Grid>
-      </Stack>
+      </Grid>
     </Box>
   );
 }

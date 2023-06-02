@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Container, Step, StepLabel, Stepper } from "@mui/material";
+import { Box, Container, Step, StepLabel, Stepper } from "@mui/material";
 
-import Tickets from "./Tickets";
+import Tickets, { SelectedTicket, TicketType } from "./Tickets";
+import Summary from "./Summary";
+import Places from "./Places";
 
 const steps = [
   { label: "Bilety" },
@@ -11,11 +13,27 @@ const steps = [
 
 function Reserve() {
   const [activeStep, setActiveStep] = useState(0);
+  const goNext = () => setActiveStep((prev) => prev + 1);
+  const goPrev = () => setActiveStep((prev) => prev - 1);
+
+  const [selectedTickets, setSelectedTickets] = useState<SelectedTicket[]>([
+    { type: TicketType.Normal, numOfTickets: 2 },
+  ]);
 
   const stepContentSwitch = () => {
     switch (activeStep) {
       case 0:
-        return <Tickets goNext={() => setActiveStep((prev) => prev + 1)} />;
+        return (
+          <Tickets
+            goNext={goNext}
+            selectedTickets={selectedTickets}
+            setSelectedTickets={setSelectedTickets}
+          />
+        );
+      case 1:
+        return <Places goPrev={goPrev} goNext={goNext} />;
+      case 2:
+        return <Summary goPrev={goPrev} />;
       default:
         return <div>error</div>;
     }
@@ -30,7 +48,15 @@ function Reserve() {
           </Step>
         ))}
       </Stepper>
-      {stepContentSwitch()}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: { xs: 2, md: 6 },
+        }}
+      >
+        {stepContentSwitch()}
+      </Box>
     </Container>
   );
 }
