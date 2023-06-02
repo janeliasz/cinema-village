@@ -5,7 +5,7 @@ export enum TicketType {
   Senior = "Senior",
 }
 
-type SelectedTicket = {
+export type SelectedTicketType = {
   type: TicketType;
   numOfTickets: number;
 };
@@ -47,7 +47,7 @@ type TicketsAction =
   | RemoveTypeAction;
 
 export function ticketsReducer(
-  tickets: SelectedTicket[],
+  tickets: SelectedTicketType[],
   action: TicketsAction,
 ) {
   switch (action.type) {

@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -12,11 +12,8 @@ import {
   Typography,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-  TicketsActions,
-  TicketType,
-  ticketsReducer,
-} from "./ticketReducer";
+import { TicketType } from "./ticketReducer";
+import { useReservation } from "./ReservationProvider";
 
 const ticketPrices = {
   [TicketType.Normal]: 26,
@@ -25,14 +22,14 @@ const ticketPrices = {
   [TicketType.Senior]: 21,
 };
 
-function Tickets({
-  goNext,
-}: {
-  goNext: () => void;
-}) {
-  const [selectedTickets, dispatch] = useReducer(ticketsReducer, [
-    { type: TicketType.Normal, numOfTickets: 2 },
-  ]);
+function Tickets({ goNext }: { goNext: () => void }) {
+  const {
+    selectedTickets,
+    changeTicketType,
+    changeNumOfTickets,
+    addTicketType,
+    removeTicketType,
+  } = useReservation();
 
   const selectedTypes = selectedTickets.map(({ type }) => type);
   const typesToSelect = [
@@ -43,28 +40,22 @@ function Tickets({
   ].filter((type) => !selectedTypes.includes(type));
 
   const onTypeChange = (e: SelectChangeEvent<TicketType>, rowIdx: number) => {
-    dispatch({
-      type: TicketsActions.CHANGE_TYPE,
-      payload: { rowIdx, type: e.target.value as TicketType },
-    });
+    changeTicketType(rowIdx, e.target.value as TicketType);
   };
 
   const onNumberChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     rowIdx: number,
   ) => {
-    dispatch({
-      type: TicketsActions.CHANGE_NUM_OF_TICKETS,
-      payload: { rowIdx, numOfTickets: Number(e.target.value) },
-    });
+    changeNumOfTickets(rowIdx, Number(e.target.value));
   };
 
   const addType = () => {
-    dispatch({ type: TicketsActions.ADD_TYPE, ticketType: typesToSelect[0] });
+    addTicketType(typesToSelect[0]);
   };
 
   const removeType = (type: TicketType) => {
-    dispatch({ type: TicketsActions.REMOVE_TYPE, ticketType: type });
+    removeTicketType(type);
   };
 
   return (

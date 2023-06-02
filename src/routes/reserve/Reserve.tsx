@@ -4,6 +4,7 @@ import { Box, Container, Step, StepLabel, Stepper } from "@mui/material";
 import Tickets from "./Tickets";
 import Summary from "./Summary";
 import Places from "./Places";
+import ReservationProvider from "./ReservationProvider";
 
 const steps = [
   { label: "Bilety" },
@@ -30,24 +31,26 @@ function Reserve() {
   };
 
   return (
-    <Container sx={{ marginTop: { xs: 2, md: 6 } }}>
-      <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map(({ label }) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: { xs: 2, md: 6 },
-        }}
-      >
-        {stepContentSwitch()}
-      </Box>
-    </Container>
+    <ReservationProvider>
+      <Container sx={{ marginTop: { xs: 2, md: 6 } }}>
+        <Stepper activeStep={activeStep} alternativeLabel>
+          {steps.map(({ label }) => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: { xs: 2, md: 6 },
+          }}
+        >
+          {stepContentSwitch()}
+        </Box>
+      </Container>
+    </ReservationProvider>
   );
 }
 
