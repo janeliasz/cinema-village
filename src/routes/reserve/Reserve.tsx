@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Box, Container, Step, StepLabel, Stepper } from "@mui/material";
 
 import Tickets from "./Tickets";
-import Summary from "./Summary";
+import PersonalInfo from "./PersonalInfo";
 import Places from "./Places";
 import ReservationProvider from "./ReservationProvider";
 
@@ -24,7 +24,7 @@ function Reserve() {
       case 1:
         return <Places goPrev={goPrev} goNext={goNext} />;
       case 2:
-        return <Summary goPrev={goPrev} />;
+        return <PersonalInfo goPrev={goPrev} />;
       default:
         return <div>error</div>;
     }

@@ -1,14 +1,4 @@
-export enum TicketType {
-  Normal = "Normalny",
-  Premium = "Premium",
-  Student = "Studencki",
-  Senior = "Senior",
-}
-
-export type SelectedTicketType = {
-  type: TicketType;
-  numOfTickets: number;
-};
+import { SelectedTicketType, TicketType } from "./types";
 
 export enum TicketsActions {
   CHANGE_TYPE = "CHANGE_TYPE",

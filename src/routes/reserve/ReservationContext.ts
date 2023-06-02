@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { SelectedTicketType, TicketType } from "./ticketReducer";
+import { PersonalData, SelectedTicketType, TicketType } from "./types";
 
 export type ReservationContextType = {
   selectedTickets: SelectedTicketType[];
@@ -7,6 +7,10 @@ export type ReservationContextType = {
   changeNumOfTickets: (rowIdx: number, numOfTickets: number) => void;
   addTicketType: (ticketType: TicketType) => void;
   removeTicketType: (ticketType: TicketType) => void;
-}
+  personalInfo: PersonalData;
+  setPersonalInfo: React.Dispatch<React.SetStateAction<PersonalData>>;
+};
 
-export const ReservationContext = createContext<ReservationContextType | null>(null);
+export const ReservationContext = createContext<ReservationContextType | null>(
+  null,
+);

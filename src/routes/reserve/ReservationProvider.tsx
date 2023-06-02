@@ -1,9 +1,7 @@
-import { useContext, useMemo, useReducer } from "react";
-import {
-  ReservationContext,
-  ReservationContextType,
-} from "./reservationContext";
-import { TicketType, TicketsActions, ticketsReducer } from "./ticketReducer";
+import { useContext, useMemo, useReducer, useState } from "react";
+import { TicketsActions, ticketsReducer } from "./ticketReducer";
+import { ReservationContext, ReservationContextType } from "./ReservationContext";
+import { PersonalData, TicketType } from "./types";
 
 function ReservationProvider({ children }: { children: React.ReactNode }) {
   const [selectedTickets, dispatch] = useReducer(ticketsReducer, [
@@ -28,9 +26,16 @@ function ReservationProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: TicketsActions.ADD_TYPE, ticketType: type });
   };
 
-  const removeTicketType = (type: TicketType) => {
+  const removeTicketType = (type: TicketType) => {    
     dispatch({ type: TicketsActions.REMOVE_TYPE, ticketType: type });
   };
+
+  const [personalInfo, setPersonalInfo] = useState<PersonalData>({
+    name: "",
+    surname: "",
+    email: "",
+    phone: "",
+  });
 
   const contextValue = useMemo(
     () => ({
@@ -39,8 +44,10 @@ function ReservationProvider({ children }: { children: React.ReactNode }) {
       changeNumOfTickets,
       addTicketType,
       removeTicketType,
+      personalInfo,
+      setPersonalInfo,
     }),
-    [selectedTickets],
+    [selectedTickets, personalInfo],
   );
 
   return (

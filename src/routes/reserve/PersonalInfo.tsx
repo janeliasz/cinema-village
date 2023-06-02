@@ -1,18 +1,22 @@
 import { Box, Button, Grid, Stack, TextField } from "@mui/material";
-import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useReservation } from "./ReservationProvider";
 
-function Summary({ goPrev }: { goPrev: () => void }) {
+function PersonalInfo({ goPrev }: { goPrev: () => void }) {
   const { id: showId } = useParams() as { id: string };
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const { personalInfo, setPersonalInfo } = useReservation();
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setPersonalInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log("reserving: ", showId, name, surname, email, phone);
+    // eslint-disable-next-line no-console
+    console.log("reserving: ", showId, personalInfo);
   };
 
   return (
@@ -27,10 +31,9 @@ function Summary({ goPrev }: { goPrev: () => void }) {
             <TextField
               required
               label="Imię"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
+              name="name"
+              value={personalInfo.name}
+              onChange={handleChange}
               inputProps={{ pattern: "[A-Za-z]+" }}
               fullWidth
               size="small"
@@ -40,10 +43,9 @@ function Summary({ goPrev }: { goPrev: () => void }) {
             <TextField
               required
               label="Nazwisko"
-              value={surname}
-              onChange={(e) => {
-                setSurname(e.target.value);
-              }}
+              name="surname"
+              value={personalInfo.surname}
+              onChange={handleChange}
               inputProps={{ pattern: "[A-Za-z]+" }}
               fullWidth
               size="small"
@@ -54,10 +56,9 @@ function Summary({ goPrev }: { goPrev: () => void }) {
               required
               type="email"
               label="Email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              name="email"
+              value={personalInfo.email}
+              onChange={handleChange}
               fullWidth
               size="small"
             />
@@ -67,10 +68,9 @@ function Summary({ goPrev }: { goPrev: () => void }) {
               required
               type="tel"
               label="Telefon"
-              value={phone}
-              onChange={(e) => {
-                setPhone(e.target.value);
-              }}
+              name="phone"
+              value={personalInfo.phone}
+              onChange={handleChange}
               inputProps={{ pattern: "[0-9]{9}" }}
               fullWidth
               size="small"
@@ -93,4 +93,4 @@ function Summary({ goPrev }: { goPrev: () => void }) {
   );
 }
 
-export default Summary;
+export default PersonalInfo;
