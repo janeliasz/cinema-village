@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Container, Step, StepLabel, Stepper } from "@mui/material";
 
-import Tickets, { SelectedTicket, TicketType } from "./Tickets";
+import Tickets from "./Tickets";
 import Summary from "./Summary";
 import Places from "./Places";
 
@@ -16,20 +16,10 @@ function Reserve() {
   const goNext = () => setActiveStep((prev) => prev + 1);
   const goPrev = () => setActiveStep((prev) => prev - 1);
 
-  const [selectedTickets, setSelectedTickets] = useState<SelectedTicket[]>([
-    { type: TicketType.Normal, numOfTickets: 2 },
-  ]);
-
   const stepContentSwitch = () => {
     switch (activeStep) {
       case 0:
-        return (
-          <Tickets
-            goNext={goNext}
-            selectedTickets={selectedTickets}
-            setSelectedTickets={setSelectedTickets}
-          />
-        );
+        return <Tickets goNext={goNext} />;
       case 1:
         return <Places goPrev={goPrev} goNext={goNext} />;
       case 2:

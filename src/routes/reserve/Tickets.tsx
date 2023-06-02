@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer } from "react";
 import {
   Box,
   Button,
@@ -12,18 +12,11 @@ import {
   Typography,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-
-export enum TicketType {
-  Normal = "Normalny",
-  Premium = "Premium",
-  Student = "Studencki",
-  Senior = "Senior",
-}
-
-export type SelectedTicket = {
-  type: TicketType;
-  numOfTickets: number;
-};
+import {
+  TicketsActions,
+  TicketType,
+  ticketsReducer,
+} from "./ticketReducer";
 
 const ticketPrices = {
   [TicketType.Normal]: 26,
@@ -34,13 +27,13 @@ const ticketPrices = {
 
 function Tickets({
   goNext,
-  selectedTickets,
-  setSelectedTickets,
 }: {
   goNext: () => void;
-  selectedTickets: SelectedTicket[];
-  setSelectedTickets: React.Dispatch<React.SetStateAction<SelectedTicket[]>>;
 }) {
+  const [selectedTickets, dispatch] = useReducer(ticketsReducer, [
+    { type: TicketType.Normal, numOfTickets: 2 },
+  ]);
+
   const selectedTypes = selectedTickets.map(({ type }) => type);
   const typesToSelect = [
     TicketType.Normal,
@@ -50,43 +43,28 @@ function Tickets({
   ].filter((type) => !selectedTypes.includes(type));
 
   const onTypeChange = (e: SelectChangeEvent<TicketType>, rowIdx: number) => {
-    setSelectedTickets((prev) =>
-      prev.map((ticket, idx) =>
-        idx === rowIdx
-          ? {
-              type: e.target.value as TicketType,
-              numOfTickets: ticket.numOfTickets,
-            }
-          : ticket,
-      ),
-    );
+    dispatch({
+      type: TicketsActions.CHANGE_TYPE,
+      payload: { rowIdx, type: e.target.value as TicketType },
+    });
   };
 
   const onNumberChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     rowIdx: number,
   ) => {
-    setSelectedTickets((prev) =>
-      prev.map((ticket, idx) =>
-        idx === rowIdx
-          ? {
-              type: ticket.type,
-              numOfTickets: Number(e.target.value),
-            }
-          : ticket,
-      ),
-    );
+    dispatch({
+      type: TicketsActions.CHANGE_NUM_OF_TICKETS,
+      payload: { rowIdx, numOfTickets: Number(e.target.value) },
+    });
   };
 
-  const addNewType = () => {
-    setSelectedTickets((prev) => [
-      ...prev,
-      { type: typesToSelect[0], numOfTickets: 1 },
-    ]);
+  const addType = () => {
+    dispatch({ type: TicketsActions.ADD_TYPE, ticketType: typesToSelect[0] });
   };
 
   const removeType = (type: TicketType) => {
-    setSelectedTickets((prev) => prev.filter((ticket) => ticket.type !== type));
+    dispatch({ type: TicketsActions.REMOVE_TYPE, ticketType: type });
   };
 
   return (
@@ -212,7 +190,7 @@ function Tickets({
         >
           <Button
             variant="contained"
-            onClick={addNewType}
+            onClick={addType}
             disabled={typesToSelect.length === 0}
           >
             DODAJ WIĘCEJ
