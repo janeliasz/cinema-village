@@ -110,8 +110,8 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
             src={product.images[0]}
             component="img"
             sx={{
-              width: { xs: "50vw", md: "12vw" },
-              height: { xs: "auto", md: "30vh" },
+              width: { xs: "50vw", md: "15rem" },
+              height: { xs: "auto", md: "20rem" },
               padding: "1rem",
               objectFit: "cover",
             }}

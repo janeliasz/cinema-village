@@ -1,10 +1,21 @@
-import { Box, Button, Grid, Stack, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  List,
+  ListItem,
+  Paper,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useReservation } from "./ReservationProvider";
+import { ticketPrices } from "./Tickets";
 
 function PersonalInfo({ goPrev }: { goPrev: () => void }) {
   const { id: showId } = useParams() as { id: string };
-  const { personalInfo, setPersonalInfo } = useReservation();
+  const { personalInfo, setPersonalInfo, selectedTickets } = useReservation();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -16,7 +27,7 @@ function PersonalInfo({ goPrev }: { goPrev: () => void }) {
     e.preventDefault();
 
     // eslint-disable-next-line no-console
-    console.log("reserving: ", showId, personalInfo);
+    console.log("reserving: ", showId, personalInfo, selectedTickets);
   };
 
   return (
@@ -25,8 +36,52 @@ function PersonalInfo({ goPrev }: { goPrev: () => void }) {
         width: { xs: "95%", md: "50%" },
       }}
     >
+      <Paper>
+        <List>
+          {selectedTickets.map((ticket) => (
+            <ListItem key={ticket.type}>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                sx={{ width: "100%" }}
+              >
+                <Typography variant="subtitle1">
+                  {ticket.type} - {ticket.numOfTickets}
+                </Typography>
+                <Typography variant="subtitle1" fontWeight="bold">
+                  {(ticket.numOfTickets * ticketPrices[ticket.type]).toFixed(2)}{" "}
+                  zł
+                </Typography>
+              </Stack>
+            </ListItem>
+          ))}
+          {selectedTickets.length > 1 && (
+            <ListItem>
+              <Typography
+                fontWeight="bold"
+                textAlign="right"
+                sx={{ width: "100%" }}
+              >
+                ŁĄCZNIE:{" "}
+                {selectedTickets
+                  .reduce(
+                    (acc, current) =>
+                      acc + current.numOfTickets * ticketPrices[current.type],
+                    0,
+                  )
+                  .toFixed(2)}{" "}
+                zł
+              </Typography>
+            </ListItem>
+          )}
+        </List>
+      </Paper>
       <form onSubmit={handleSubmit}>
-        <Grid container spacing={1}>
+        <Grid
+          container
+          spacing={1}
+          sx={{ marginTop: { xs: "1rem", md: "2rem" } }}
+        >
           <Grid item xs={12} sm={6}>
             <TextField
               required

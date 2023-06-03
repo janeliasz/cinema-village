@@ -15,7 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useReservation } from "./ReservationProvider";
 import { TicketType } from "./types";
 
-const ticketPrices = {
+export const ticketPrices = {
   [TicketType.Normal]: 26,
   [TicketType.Premium]: 34,
   [TicketType.Student]: 20,
