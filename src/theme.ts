@@ -8,6 +8,9 @@ const theme = createTheme({
       dark: "#0A77D6",
     },
   },
+  typography: {
+    fontFamily: "Inter, Roboto, sans-serif",
+  },
 });
 
 export default theme;

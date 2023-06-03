@@ -104,7 +104,7 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
         width: { xs: "95%", md: "90%" },
       }}
     >
-      <Typography variant="h6" sx={{ alignSelf: "flex-start" }}>
+      <Typography variant="h6" sx={{ alignSelf: "flex-start", fontWeight: "bold" }}>
         {today.toUpperCase()}
       </Typography>
       {products.map((product) => (
