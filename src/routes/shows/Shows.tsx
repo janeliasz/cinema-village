@@ -14,11 +14,11 @@ import { ShowDate, useGetShowsByDateQuery } from "../../api/showsApi";
 import DaysTabs, { nextDays } from "../../components/DaysTabs";
 
 function Shows() {
-  const [openIdx, setOpenIdx] = useState(0);
+  const [openDayTab, setOpenDayTab] = useState(0);
 
   return (
     <Container sx={{ marginTop: { xs: 2, md: 6 } }}>
-      <DaysTabs openIdx={openIdx} onChange={setOpenIdx} />
+      <DaysTabs openIdx={openDayTab} onChange={setOpenDayTab} />
       <Box
         sx={{
           display: "flex",
@@ -27,13 +27,13 @@ function Shows() {
           marginBottom: "50vh",
         }}
       >
-        <ShowTabPanel date={nextDays[openIdx]} />
+        <ShowsTabPanel date={nextDays[openDayTab]} />
       </Box>
     </Container>
   );
 }
 
-const shows = [
+export const screenings = [
   {
     id: 1,
     time: "12:00",
@@ -48,7 +48,7 @@ const shows = [
   },
 ];
 
-function ShowTabPanel({ date }: { date: ShowDate }) {
+function ShowsTabPanel({ date }: { date: ShowDate }) {
   const { isFetching, data } = useGetShowsByDateQuery(date) as {
     isFetching: boolean;
     data: {
@@ -153,14 +153,14 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
               </Typography>
             </Box>
             <Stack sx={{ width: { xs: "100%", md: "30%" } }} spacing={2}>
-              {shows.map((show) => (
-                <Link key={show.id} to={`/reserve/${show.id}`}>
+              {screenings.map((screening) => (
+                <Link key={screening.id} to={`/reserve/${screening.id}`}>
                   <Button
                     variant="outlined"
                     fullWidth
                     sx={{ fontSize: "1rem" }}
                   >
-                    {show.time}
+                    {screening.time}
                   </Button>
                 </Link>
               ))}
