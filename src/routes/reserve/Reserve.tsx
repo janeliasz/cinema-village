@@ -44,7 +44,7 @@ function Reserve() {
           sx={{
             display: "flex",
             justifyContent: "center",
-            marginTop: { xs: 2, md: 6 },
+            marginTop: { xs: 6, md: 8 },
           }}
         >
           {stepContentSwitch()}

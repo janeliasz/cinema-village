@@ -111,8 +111,9 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
             component="img"
             sx={{
               width: { xs: "50vw", md: "12vw" },
+              height: { xs: "auto", md: "30vh" },
               padding: "1rem",
-              objectFit: "contain",
+              objectFit: "cover",
             }}
           />
           <CardContent

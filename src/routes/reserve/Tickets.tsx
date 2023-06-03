@@ -67,19 +67,22 @@ function Tickets({ goNext }: { goNext: () => void }) {
       <Grid container>
         <Grid
           item
-          xs={4}
+          xs={6}
+          md={4}
           sx={{
             marginBottom: { xs: 1, md: 3 },
           }}
         >
           <Typography sx={{ fontWeight: "bold" }}>RODZAJ</Typography>
         </Grid>
-        <Grid item xs={4}>
-          <Typography sx={{ textAlign: "center", fontWeight: "bold" }}>
+        <Grid item xs={3} md={4}>
+          <Typography
+            sx={{ textAlign: { xs: "left", md: "center" }, fontWeight: "bold" }}
+          >
             LICZBA
           </Typography>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3} md={4}>
           <Typography sx={{ textAlign: "right", fontWeight: "bold" }}>
             CENA
           </Typography>
@@ -87,8 +90,17 @@ function Tickets({ goNext }: { goNext: () => void }) {
 
         {selectedTickets.map(({ type, numOfTickets }, rowIdx) => (
           <React.Fragment key={type}>
-            <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
-              <IconButton color="error" onClick={() => removeType(type)}>
+            <Grid
+              item
+              xs={6}
+              md={4}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <IconButton
+                color="error"
+                onClick={() => removeType(type)}
+                sx={{ paddingLeft: 0 }}
+              >
                 <DeleteIcon />
               </IconButton>
               <FormControl size="small" variant="standard">
@@ -108,10 +120,11 @@ function Tickets({ goNext }: { goNext: () => void }) {
 
             <Grid
               item
-              xs={4}
+              xs={3}
+              md={4}
               sx={{
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: { xs: "flex-start", md: "center" },
                 alignItems: "center",
               }}
             >
@@ -130,7 +143,8 @@ function Tickets({ goNext }: { goNext: () => void }) {
 
             <Grid
               item
-              xs={4}
+              xs={3}
+              md={4}
               sx={{
                 display: "flex",
                 justifyContent: "flex-end",
@@ -176,7 +190,7 @@ function Tickets({ goNext }: { goNext: () => void }) {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            marginTop: { xs: 1, md: 3 },
+            marginTop: { xs: 3, md: 5 },
           }}
         >
           <Button
