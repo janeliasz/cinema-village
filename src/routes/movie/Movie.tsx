@@ -5,7 +5,7 @@ import { useGetMovieByIdQuery } from "../../api/moviesApi";
 const detailsTitles1 = ["GATUNEK", "WIEK", "CZAS", "PRODUKCJA"];
 const detailsTitles2 = ["REŻYSERIA", "SCENARIUSZ", "OBSADA"];
 
-function ShowDetails() {
+function Movie() {
   const { id } = useParams();
   const { isFetching, data } = useGetMovieByIdQuery(Number(id)) as {
     isFetching: boolean;
@@ -187,4 +187,4 @@ function DummyDesc() {
   );
 }
 
-export default ShowDetails;
+export default Movie;

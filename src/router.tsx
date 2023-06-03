@@ -2,7 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import Shows from "./routes/shows/Shows";
 import Reserve from "./routes/reserve/Reserve";
-import ShowDetails from "./routes/showDetails/ShowDetails";
+import Movie from "./routes/movie/Movie";
 
 const router = createBrowserRouter([
   {
@@ -18,8 +18,8 @@ const router = createBrowserRouter([
         element: <Shows />,
       },
       {
-        path: "shows/:id",
-        element: <ShowDetails />,
+        path: "movies/:id",
+        element: <Movie />,
       },
       {
         path: "reserve/:id",

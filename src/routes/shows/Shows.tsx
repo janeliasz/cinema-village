@@ -1,10 +1,6 @@
 import { useState } from "react";
 import {
-  useMediaQuery,
   Container,
-  Tabs,
-  Tab,
-  useTheme,
   Card,
   CardMedia,
   Box,
@@ -15,35 +11,14 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ShowDate, useGetShowsByDateQuery } from "../../api/showsApi";
-import { getNextDays } from "./utils";
+import DaysTabs, { nextDays } from "../../components/DaysTabs";
 
 function Shows() {
-  const nextDays = getNextDays(7);
-
   const [openIdx, setOpenIdx] = useState(0);
-
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <Container sx={{ marginTop: { xs: 2, md: 6 } }}>
-      <Tabs
-        value={openIdx}
-        onChange={(_, newValue) => {
-          setOpenIdx(newValue);
-        }}
-        variant={isSmallScreen ? "scrollable" : "standard"}
-        allowScrollButtonsMobile
-        centered={!isSmallScreen}
-      >
-        {nextDays.map((day: ShowDate) => (
-          <Tab
-            key={day.day}
-            label={`${day.day}.${day.month + 1}.${day.year}`}
-            sx={{ fontSize: "1rem" }}
-          />
-        ))}
-      </Tabs>
+      <DaysTabs openIdx={openIdx} onChange={setOpenIdx} />
       <Box
         sx={{
           display: "flex",
@@ -123,16 +98,18 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
           }}
           raised
         >
-          <CardMedia
-            src={product.images[0]}
-            component="img"
-            sx={{
-              width: { xs: "50vw", md: "12rem" },
-              height: { xs: "auto", md: "15rem" },
-              padding: "1rem",
-              objectFit: "cover",
-            }}
-          />
+          <Link to={`/movies/${product.id}`}>
+            <CardMedia
+              src={product.images[0]}
+              component="img"
+              sx={{
+                width: { xs: "50vw", md: "12rem" },
+                height: { xs: "auto", md: "15rem" },
+                padding: "1rem",
+                objectFit: "cover",
+              }}
+            />
+          </Link>
           <CardContent
             sx={{
               width: "100%",
@@ -144,7 +121,7 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
           >
             <Box sx={{ width: { xs: "100%", md: "70%" } }}>
               <Link
-                to={`${product.id}`}
+                to={`/movies/${product.id}`}
                 style={{ color: "inherit", textDecoration: "none" }}
               >
                 <Typography
