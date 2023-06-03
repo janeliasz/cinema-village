@@ -104,7 +104,10 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
         width: { xs: "95%", md: "90%" },
       }}
     >
-      <Typography variant="h6" sx={{ alignSelf: "flex-start", fontWeight: "bold" }}>
+      <Typography
+        variant="h6"
+        sx={{ alignSelf: "flex-start", fontWeight: "bold" }}
+      >
         {today.toUpperCase()}
       </Typography>
       {products.map((product) => (
@@ -123,8 +126,8 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
             src={product.images[0]}
             component="img"
             sx={{
-              width: { xs: "50vw", md: "15rem" },
-              height: { xs: "auto", md: "20rem" },
+              width: { xs: "50vw", md: "12rem" },
+              height: { xs: "auto", md: "15rem" },
               padding: "1rem",
               objectFit: "cover",
             }}
@@ -139,20 +142,30 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
             }}
           >
             <Box sx={{ width: { xs: "100%", md: "70%" } }}>
-              <Typography variant="h4" sx={{ marginBottom: { xs: 1, md: 3 } }}>
+              <Typography
+                variant="h4"
+                fontSize="1.75rem"
+                sx={{ marginBottom: { xs: 1, md: 3 } }}
+              >
                 {product.title}
               </Typography>
-              <Typography variant="subtitle1">
+              <Typography variant="subtitle1" fontSize="0.875rem">
                 GATUNEK: {product.category}
               </Typography>
-              <Typography variant="subtitle1">WIEK: {product.stock}</Typography>
-              <Typography variant="subtitle1">
+              <Typography variant="subtitle1" fontSize="0.875rem">
+                WIEK: {product.stock}
+              </Typography>
+              <Typography variant="subtitle1" fontSize="0.875rem">
                 CZAS: {product.price} MIN
               </Typography>
-              <Typography variant="subtitle1">
+              <Typography variant="subtitle1" fontSize="0.875rem">
                 PRODUKCJA: {product.category}
               </Typography>
-              <Typography variant="body1" sx={{ marginTop: { xs: 1, md: 3 } }}>
+              <Typography
+                variant="body1"
+                fontSize="0.875rem"
+                sx={{ marginTop: { xs: 1, md: 3 } }}
+              >
                 {product.description}
               </Typography>
             </Box>
