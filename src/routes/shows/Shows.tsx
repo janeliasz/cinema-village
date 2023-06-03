@@ -142,13 +142,18 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
             }}
           >
             <Box sx={{ width: { xs: "100%", md: "70%" } }}>
-              <Typography
-                variant="h4"
-                fontSize="1.75rem"
-                sx={{ marginBottom: { xs: 1, md: 3 } }}
+              <Link
+                to={`${product.id}`}
+                style={{ color: "inherit", textDecoration: "none" }}
               >
-                {product.title}
-              </Typography>
+                <Typography
+                  variant="h4"
+                  fontSize="1.75rem"
+                  sx={{ marginBottom: { xs: 1, md: 3 } }}
+                >
+                  {product.title}
+                </Typography>
+              </Link>
               <Typography variant="subtitle1" fontSize="0.875rem">
                 GATUNEK: {product.category}
               </Typography>

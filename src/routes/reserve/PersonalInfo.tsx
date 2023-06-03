@@ -14,7 +14,7 @@ import { useReservation } from "./ReservationProvider";
 import { ticketPrices } from "./Tickets";
 
 function PersonalInfo({ goPrev }: { goPrev: () => void }) {
-  const { id: showId } = useParams() as { id: string };
+  const { id: showId } = useParams();
   const { personalInfo, setPersonalInfo, selectedTickets } = useReservation();
 
   const handleChange = (
