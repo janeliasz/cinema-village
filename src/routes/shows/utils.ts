@@ -6,7 +6,7 @@ export const getNextDays = (numOfDays: number): ShowDate[] =>
     const day = new Date(new Date().getTime() + n * (24 * 60 * 60 * 1000));
     return {
       year: day.getFullYear(),
-      month: day.getMonth(),
+      month: day.getMonth() + 1,
       day: day.getDate(),
     };
   });

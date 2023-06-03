@@ -12,7 +12,7 @@ export const showsApi = createApi({
   tagTypes: ["Shows"],
   endpoints: (builder) => ({
     getShowsByDate: builder.query<unknown, ShowDate>({
-      query: (date) => `${date.day}`,
+      query: (date) => `?limit=5&skip=${date.day * 2}`,
       providesTags: ["Shows"],
     }),
   }),
