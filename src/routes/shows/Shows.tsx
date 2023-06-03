@@ -81,6 +81,7 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
         id: number;
         title: string;
         description: string;
+        brand: string;
         category: string;
         stock: number;
         price: number;
