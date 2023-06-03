@@ -39,12 +39,21 @@ function Shows() {
         {nextDays.map((day: ShowDate) => (
           <Tab
             key={day.day}
-            label={`${day.day}.${day.month}.${day.year}`}
+            label={`${day.day}.${day.month + 1}.${day.year}`}
             sx={{ fontSize: "1rem" }}
           />
         ))}
       </Tabs>
-      <ShowTabPanel date={nextDays[openIdx]} />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: { xs: 4, md: 7 },
+          marginBottom: "50vh",
+        }}
+      >
+        <ShowTabPanel date={nextDays[openIdx]} />
+      </Box>
     </Container>
   );
 }
@@ -61,7 +70,7 @@ const shows = [
   {
     id: 3,
     time: "16:00",
-  }
+  },
 ];
 
 function ShowTabPanel({ date }: { date: ShowDate }) {
@@ -82,24 +91,28 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
 
   const products = data?.products;
 
+  const today = new Intl.DateTimeFormat("pl-PL", { dateStyle: "full" }).format(
+    new Date(date.year, date.month, date.day),
+  );
+
   if (isFetching) {
     return <div>fetching...</div>;
   }
   return (
     <Box
       sx={{
-        marginBottom: "50vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+        width: { xs: "95%", md: "90%" },
       }}
     >
+      <Typography variant="h6" sx={{ alignSelf: "flex-start" }}>
+        {today.toUpperCase()}
+      </Typography>
       {products.map((product) => (
         <Card
           key={product.id}
           sx={{
             marginTop: { xs: 4, md: 7 },
-            width: { xs: "95%", md: "90%" },
+            width: "100%",
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
             alignItems: { xs: "center", md: "flex-start" },
@@ -125,7 +138,7 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
               gap: "2rem",
             }}
           >
-            <Box sx={{ width: {xs: "100%", md: "70%"} }}>
+            <Box sx={{ width: { xs: "100%", md: "70%" } }}>
               <Typography variant="h4" sx={{ marginBottom: { xs: 1, md: 3 } }}>
                 {product.title}
               </Typography>
@@ -143,10 +156,14 @@ function ShowTabPanel({ date }: { date: ShowDate }) {
                 {product.description}
               </Typography>
             </Box>
-            <Stack sx={{ width: {xs: "100%", md: "30%"} }} spacing={2}>
+            <Stack sx={{ width: { xs: "100%", md: "30%" } }} spacing={2}>
               {shows.map((show) => (
                 <Link key={show.id} to={`/reserve/${show.id}`}>
-                  <Button variant="outlined" fullWidth>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    sx={{ fontSize: "1rem" }}
+                  >
                     {show.time}
                   </Button>
                 </Link>
