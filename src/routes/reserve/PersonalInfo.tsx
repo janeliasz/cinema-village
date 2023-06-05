@@ -9,13 +9,16 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useReservation } from "./ReservationProvider";
 import { ticketPrices } from "./Tickets";
+import { useSnackbar } from "../../components/snackbar/SnackbarProvider";
 
 function PersonalInfo({ goPrev }: { goPrev: () => void }) {
   const { id: showId } = useParams();
+  const navigate = useNavigate();
   const { personalInfo, setPersonalInfo, selectedTickets } = useReservation();
+  const notify = useSnackbar();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -28,6 +31,9 @@ function PersonalInfo({ goPrev }: { goPrev: () => void }) {
 
     // eslint-disable-next-line no-console
     console.log("reserving: ", showId, personalInfo, selectedTickets);
+
+    notify("Rezerwacja zakończona pomyślnie!", "success");
+    navigate("/shows");
   };
 
   return (
