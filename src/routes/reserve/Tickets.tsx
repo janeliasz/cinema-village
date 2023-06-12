@@ -99,7 +99,7 @@ function Tickets({ goNext }: { goNext: () => void }) {
               <IconButton
                 color="error"
                 onClick={() => removeType(type)}
-                sx={{ paddingLeft: 0 }}
+                sx={{ paddingLeft: { xs: 0, md: 1 } }}
               >
                 <DeleteIcon />
               </IconButton>
