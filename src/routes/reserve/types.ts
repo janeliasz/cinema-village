@@ -17,7 +17,7 @@ export type PersonalData = {
   phone: string;
 };
 
-enum SeatType {
+export enum SeatType {
   Normal = "Normal",
   Premium = "Premium",
 }
