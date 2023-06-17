@@ -19,6 +19,9 @@
 
 .seat {
   display: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .seat-label {

@@ -1,7 +1,10 @@
-import { useContext, useMemo, useReducer, useState } from "react";
+import { useCallback, useContext, useMemo, useReducer, useState } from "react";
 import { TicketsActions, ticketsReducer } from "./ticketReducer";
-import { ReservationContext, ReservationContextType } from "./ReservationContext";
-import { PersonalData, TicketType } from "./types";
+import {
+  ReservationContext,
+  ReservationContextType,
+} from "./ReservationContext";
+import { PersonalData, SelectedSeat, TicketType } from "./types";
 
 function ReservationProvider({ children }: { children: React.ReactNode }) {
   const [selectedTickets, dispatch] = useReducer(ticketsReducer, [
@@ -26,8 +29,35 @@ function ReservationProvider({ children }: { children: React.ReactNode }) {
     dispatch({ type: TicketsActions.ADD_TYPE, ticketType: type });
   };
 
-  const removeTicketType = (type: TicketType) => {    
+  const removeTicketType = (type: TicketType) => {
     dispatch({ type: TicketsActions.REMOVE_TYPE, ticketType: type });
+  };
+
+  const [selectedSeats, setSelectedSeats] = useState<SelectedSeat[]>([]);
+
+  const selectSeat = useCallback(
+    (rowNumber: number, seatNumber: number) => {
+      if (
+        selectedSeats.find(
+          (seat) =>
+            seat.rowNumber === rowNumber && seat.seatNumber === seatNumber,
+        )
+      ) {
+        return;
+      }
+
+      setSelectedSeats((prev) => [...prev, { rowNumber, seatNumber }]);
+    },
+    [selectedSeats],
+  );
+
+  const deselectSeat = (rowNumber: number, seatNumber: number) => {
+    setSelectedSeats((prev) =>
+      prev.filter(
+        (seat) =>
+          !(seat.seatNumber === seatNumber && seat.rowNumber === rowNumber),
+      ),
+    );
   };
 
   const [personalInfo, setPersonalInfo] = useState<PersonalData>({
@@ -44,10 +74,13 @@ function ReservationProvider({ children }: { children: React.ReactNode }) {
       changeNumOfTickets,
       addTicketType,
       removeTicketType,
+      selectedSeats,
+      selectSeat,
+      deselectSeat,
       personalInfo,
       setPersonalInfo,
     }),
-    [selectedTickets, personalInfo],
+    [selectedTickets, selectedSeats, selectSeat, personalInfo],
   );
 
   return (

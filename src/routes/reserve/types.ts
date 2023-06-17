@@ -41,3 +41,8 @@ export type Room = {
   roomNumber: number;
   rows: Row[];
 };
+
+export type SelectedSeat = {
+  rowNumber: number;
+  seatNumber: number;
+}

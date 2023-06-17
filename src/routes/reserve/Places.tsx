@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import React from "react";
 import { useGetRoomByIdQuery } from "../../api/roomsApi";
 import { Room, SeatType } from "./types";
+import { useReservation } from "./ReservationProvider";
 
 function Places({
   goPrev,
@@ -14,6 +15,8 @@ function Places({
     isFetching: boolean;
     data: Room;
   };
+
+  const { selectedSeats, selectSeat, deselectSeat } = useReservation();
 
   if (isFetching) {
     return <div>fetching...</div>;
@@ -37,9 +40,13 @@ function Places({
                 const emptySpace = Array.from(
                   { length: seat.positionInRow - prevSeatPos - 1 },
                   // eslint-disable-next-line react/self-closing-comp
-                  (_, i) => (
-                    <div key={`space${i}`} className="empty-space" />
-                  ),
+                  (_, i) => <div key={`space${i}`} className="empty-space" />,
+                );
+
+                const isSelected = selectedSeats.find(
+                  (selectedSeat) =>
+                    selectedSeat.rowNumber === row.rowNumber &&
+                    selectedSeat.seatNumber === seat.seatNumber,
                 );
 
                 prevSeatPos = seat.positionInRow;
@@ -53,10 +60,18 @@ function Places({
                       className="seat"
                     />
                     <label
+                      role="presentation"
                       htmlFor={`row${row.rowNumber}-seat${seat.seatNumber}`}
                       className={`seat-label
+                      ${isSelected ? "seat-selected" : ""}
                       ${seat.reserved ? "seat-reserved" : ""}
                       ${seat.type === SeatType.Premium ? "seat-premium" : ""}`}
+                      onClick={() => {
+                        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                        isSelected
+                          ? deselectSeat(row.rowNumber, seat.seatNumber)
+                          : selectSeat(row.rowNumber, seat.seatNumber);
+                      }}
                     >
                       {seat.seatNumber}
                     </label>

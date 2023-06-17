@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { PersonalData, SelectedTicketType, TicketType } from "./types";
+import { PersonalData, SelectedSeat, SelectedTicketType, TicketType } from "./types";
 
 export type ReservationContextType = {
   selectedTickets: SelectedTicketType[];
@@ -7,6 +7,9 @@ export type ReservationContextType = {
   changeNumOfTickets: (rowIdx: number, numOfTickets: number) => void;
   addTicketType: (ticketType: TicketType) => void;
   removeTicketType: (ticketType: TicketType) => void;
+  selectedSeats: SelectedSeat[];
+  selectSeat: (rowNumber: number, seatNumber: number) => void;
+  deselectSeat: (rowNumber: number, seatNumber: number) => void;
   personalInfo: PersonalData;
   setPersonalInfo: React.Dispatch<React.SetStateAction<PersonalData>>;
 };
