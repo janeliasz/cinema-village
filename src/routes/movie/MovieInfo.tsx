@@ -9,12 +9,10 @@ function MovieInfo() {
     data: {
       id: number;
       title: string;
-      description: string;
-      brand: string;
-      category: string;
-      stock: number;
-      price: number;
-      images: string[];
+      director: string;
+      overview: string;
+      releaseDate: string;
+      runtime: number;
     };
   };
 
@@ -28,16 +26,17 @@ function MovieInfo() {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
+          justifyContent: "space-between",
           alignItems: "center",
           gap: { xs: 1, md: 3 },
         }}
       >
         <Box
           sx={{
-            width: { xs: "100%", md: "40%" },
+            width: { xs: "100%", md: "30%" },
           }}
         >
-          <img src={data.images[0]} alt={data.title} width="100%" />
+          <img src="https://fwcdn.pl/fpo/08/96/896/8029196.6.jpg" alt={data.title} width="100%" />
         </Box>
         <Box sx={{ width: { xs: "100%", md: "60%" } }}>
           <Typography
@@ -48,7 +47,7 @@ function MovieInfo() {
           >
             {data.title}
           </Typography>
-          {[data.category, data.stock, data.price, data.category].map(
+          {[data.director, data.releaseDate, data.runtime].map(
             (detail, idx) => (
               <Box
                 // eslint-disable-next-line react/no-array-index-key
@@ -63,7 +62,7 @@ function MovieInfo() {
                   color="primary"
                   sx={{ fontSize: { xs: "1rem", md: "1.125rem" } }}
                 >
-                  {detailsTitles1[idx]}:
+                  {detailsTitles[idx]}:
                 </Typography>
                 <Typography
                   variant="subtitle1"
@@ -81,47 +80,9 @@ function MovieInfo() {
               fontSize: { xs: "1rem", md: "1.125rem" },
             }}
           >
-            {data.description}
+            {data.overview}
           </Typography>
         </Box>
-      </Box>
-
-      <Box
-        sx={{
-          marginTop: { xs: 3, md: 6 },
-        }}
-      >
-        {[data.brand, data.category, `${data.category}, ${data.brand}`].map(
-          (detail, idx) => (
-            <Box
-              key={detail}
-              sx={{
-                display: "flex",
-                gap: 1,
-              }}
-            >
-              <Typography
-                variant="subtitle1"
-                color="primary"
-                sx={{
-                  fontSize: { xs: "1rem", md: "1.125rem" },
-                  letterSpacing: "0.175rem",
-                }}
-              >
-                {detailsTitles2[idx]}:
-              </Typography>
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontSize: { xs: "1rem", md: "1.125rem" },
-                  letterSpacing: "0.175rem",
-                }}
-              >
-                {detail}
-              </Typography>
-            </Box>
-          ),
-        )}
       </Box>
 
       <Box sx={{ marginTop: { xs: 3, md: 4 } }}>
@@ -131,8 +92,7 @@ function MovieInfo() {
   );
 }
 
-const detailsTitles1 = ["GATUNEK", "WIEK", "CZAS", "PRODUKCJA"];
-const detailsTitles2 = ["REŻYSERIA", "SCENARIUSZ", "OBSADA"];
+const detailsTitles = ["REŻYSERIA", "ROK", "CZAS"];
 
 function DummyDesc() {
   return (
