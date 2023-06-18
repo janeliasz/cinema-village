@@ -18,9 +18,10 @@ export type PersonalData = {
 };
 
 export enum SeatType {
-  Normal = "Normal",
-  Premium = "Premium",
+  Normal = "normal",
+  Premium = "premium",
 }
+
 type Seat = {
   id: number;
   seatNumber: number;
