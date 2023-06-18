@@ -1,6 +1,6 @@
 import { Box, Button, Stack } from "@mui/material";
 import React from "react";
-import { useGetRoomByIdQuery } from "../../api/roomsApi";
+import { useGetRoomByIdQuery } from "../../api/showsApi";
 import { Room, SeatType, TicketType } from "./types";
 import { useReservation } from "./ReservationProvider";
 import "./seats.css";

@@ -13,11 +13,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useReservation } from "./ReservationProvider";
 import { ticketPrices } from "./Tickets";
 import { useSnackbar } from "../../components/snackbar/SnackbarProvider";
+import { useReserveMutation } from "../../api/showsApi";
 
 function PersonalInfo({ goPrev }: { goPrev: () => void }) {
-  const { id: showId } = useParams();
+  const { id: showId } = useParams() as { id: string };
   const navigate = useNavigate();
-  const { personalInfo, setPersonalInfo, selectedTickets } = useReservation();
+
+  const [reserve] = useReserveMutation();
+
+  const { personalInfo, setPersonalInfo, selectedTickets, selectedSeats } =
+    useReservation();
   const notify = useSnackbar();
 
   const handleChange = (
@@ -32,7 +37,23 @@ function PersonalInfo({ goPrev }: { goPrev: () => void }) {
     // eslint-disable-next-line no-console
     console.log("reserving: ", showId, personalInfo, selectedTickets);
 
-    notify("Rezerwacja zakończona pomyślnie!", "success");
+    const reservationResult = (await reserve({
+      screeningId: Number(showId),
+      rowNumber: selectedSeats[0].rowNumber,
+      seatNumber: selectedSeats[0].seatNumber,
+      personalInfo: {
+        firstName: personalInfo.name,
+        lastName: personalInfo.surname,
+        email: personalInfo.email,
+        phoneNumber: personalInfo.phone,
+      },
+    })) as { error: { originalStatus: number } };
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    reservationResult.error.originalStatus === 200
+      ? notify("Rezerwacja przebiegła pomyślnie!", "success")
+      : notify("Wystąpił błąd podczas rezerwacji.", "error");
+
     navigate("/shows");
   };
 
