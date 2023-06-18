@@ -1,6 +1,10 @@
 import { Box, Button, Stack } from "@mui/material";
 import React from "react";
-import { useGetRoomByIdQuery } from "../../api/showsApi";
+import { useParams } from "react-router-dom";
+import {
+  useGetRoomByIdQuery,
+  useGetShowByIdQuery,
+} from "../../api/showsApi";
 import { Room, SeatType, TicketType } from "./types";
 import { useReservation } from "./ReservationProvider";
 import "./seats.css";
@@ -41,7 +45,15 @@ function Seats({ goPrev, goNext }: { goPrev: () => void; goNext: () => void }) {
 }
 
 function RoomSchema() {
-  const { isFetching, data } = useGetRoomByIdQuery(1) as {
+  const { id: showId } = useParams() as { id: string };
+
+  const { data: show } = useGetShowByIdQuery(Number(showId));
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const { data, isFetching } = useGetRoomByIdQuery(show?.roomId, {
+    skip: !show,
+  }) as {
     isFetching: boolean;
     data: Room;
   };
@@ -77,7 +89,7 @@ function RoomSchema() {
     0,
   );
 
-  if (isFetching) {
+  if (!data || isFetching) {
     return <div>fetching...</div>;
   }
 

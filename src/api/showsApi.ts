@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Room } from "../routes/reserve/types";
+import { Movie } from "./moviesApi";
 
 export type SeatsAvailability = {
   normal: number;
@@ -18,6 +19,13 @@ export type ReservationRequest = {
   };
 };
 
+export type Show = {
+  id: number;
+  movie: Movie;
+  roomId: number;
+  screeningTime: string;
+};
+
 export const showsApi = createApi({
   reducerPath: "shows",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080" }),
@@ -25,6 +33,10 @@ export const showsApi = createApi({
   endpoints: (builder) => ({
     getShowsByDate: builder.query<unknown, string>({
       query: (date) => `/screenings/date?date=${date}`,
+      providesTags: ["Shows"],
+    }),
+    getShowById: builder.query<Show, number>({
+      query: (id) => `/screenings/${id}`,
       providesTags: ["Shows"],
     }),
     getAvailableSeats: builder.query<SeatsAvailability, string>({
@@ -48,6 +60,7 @@ export const showsApi = createApi({
 
 export const {
   useGetShowsByDateQuery,
+  useGetShowByIdQuery,
   useGetAvailableSeatsQuery,
   useGetRoomByIdQuery,
   useReserveMutation,
