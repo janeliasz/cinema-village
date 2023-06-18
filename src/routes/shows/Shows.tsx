@@ -135,7 +135,7 @@ function ShowsTabPanel({ date }: { date: string }) {
                     fullWidth
                     sx={{ fontSize: "1rem" }}
                   >
-                    {screening.time}
+                    {screening.time.slice(0, -3)}
                   </Button>
                 </Link>
               ))}

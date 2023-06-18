@@ -40,32 +40,34 @@ function MovieInfo() {
           >
             {data.title}
           </Typography>
-          {[data.director, data.releaseDate, data.runtime].map(
-            (detail, idx) => (
-              <Box
-                // eslint-disable-next-line react/no-array-index-key
-                key={idx}
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                }}
+          {[
+            data.director,
+            data.releaseDate.substring(0, 4),
+            `${data.runtime} MIN`,
+          ].map((detail, idx) => (
+            <Box
+              // eslint-disable-next-line react/no-array-index-key
+              key={idx}
+              sx={{
+                display: "flex",
+                gap: 1,
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                color="primary"
+                sx={{ fontSize: { xs: "1rem", md: "1.125rem" } }}
               >
-                <Typography
-                  variant="subtitle1"
-                  color="primary"
-                  sx={{ fontSize: { xs: "1rem", md: "1.125rem" } }}
-                >
-                  {detailsTitles[idx]}:
-                </Typography>
-                <Typography
-                  variant="subtitle1"
-                  sx={{ fontSize: { xs: "1rem", md: "1.125rem" } }}
-                >
-                  {detail}
-                </Typography>
-              </Box>
-            ),
-          )}
+                {detailsTitles[idx]}:
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                sx={{ fontSize: { xs: "1rem", md: "1.125rem" } }}
+              >
+                {detail}
+              </Typography>
+            </Box>
+          ))}
           <Typography
             variant="body1"
             sx={{

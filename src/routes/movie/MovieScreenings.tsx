@@ -2,21 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Box, Button, Stack } from "@mui/material";
 import DaysTabs, { nextDays } from "../../components/DaysTabs";
-
-const screenings = [
-  {
-    id: 1,
-    time: "12:00",
-  },
-  {
-    id: 2,
-    time: "14:00",
-  },
-  {
-    id: 3,
-    time: "16:00",
-  },
-];
+import { useGetShowsByDateQuery } from "../../api/showsApi";
+import { Movie } from "../../api/moviesApi";
+import NoScreenings from "../../components/NoScreenings";
 
 function MovieScreenings({ movieId }: { movieId: number }) {
   const [openDayTab, setOpenDayTab] = useState(0);
@@ -24,6 +12,7 @@ function MovieScreenings({ movieId }: { movieId: number }) {
   return (
     <>
       <DaysTabs openIdx={openDayTab} onChange={setOpenDayTab} />
+
       <Box sx={{ marginTop: { xs: 2, md: 3 } }}>
         <MovieScreeningsTabPanel
           movieId={movieId}
@@ -41,19 +30,29 @@ function MovieScreeningsTabPanel({
   movieId: number;
   date: string;
 }) {
-  return (
-    <>
-      <Stack direction="row" spacing={2} justifyContent="center">
-        {screenings.map((screening) => (
-          <Link key={screening.id} to={`/reserve/${screening.id}`}>
-            <Button variant="outlined" fullWidth sx={{ fontSize: "1rem" }}>
-              {screening.time}
-            </Button>
-          </Link>
-        ))}
-      </Stack>
-      {movieId}, {date}
-    </>
+  const { isFetching, data } = useGetShowsByDateQuery(date) as {
+    isFetching: boolean;
+    data: (Movie & { screenings: { screeningId: number; time: string }[] })[];
+  };
+
+  const screenings = data?.find((movie) => movie.id === movieId)?.screenings;
+
+  if (isFetching) {
+    return <div>fetching...</div>;
+  }
+
+  return screenings ? (
+    <Stack direction="row" spacing={2} justifyContent="center">
+      {screenings.map((screening) => (
+        <Link key={screening.screeningId} to={`/reserve/${screening.screeningId}`}>
+          <Button variant="outlined" fullWidth sx={{ fontSize: "1rem" }}>
+            {screening.time.slice(0, -3)}
+          </Button>
+        </Link>
+      ))}
+    </Stack>
+  ) : (
+    <NoScreenings />
   );
 }
 
