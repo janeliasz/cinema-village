@@ -8,12 +8,12 @@ import "./seats.css";
 function Seats({ goPrev, goNext }: { goPrev: () => void; goNext: () => void }) {
   const { selectedTickets, selectedSeats } = useReservation();
 
-  const numOfTicketsPicked = selectedTickets.reduce(
+  const numOfTicketsSelected = selectedTickets.reduce(
     (acc, selectedTicketType) => acc + selectedTicketType.numOfTickets,
     0,
   );
 
-  const goNextDisabled = selectedSeats.length !== numOfTicketsPicked;
+  const goNextDisabled = selectedSeats.length !== numOfTicketsSelected;
 
   return (
     <Box

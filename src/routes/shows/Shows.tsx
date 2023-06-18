@@ -143,7 +143,11 @@ function ShowsTabPanel({ date }: { date: string }) {
           </CardContent>
         </Card>
       ))}
-      {data.length === 0 && <NoScreenings />}
+      {data.length === 0 && (
+        <Box sx={{ marginTop: { xs: 2 } }}>
+          <NoScreenings />
+        </Box>
+      )}
     </Box>
   );
 }

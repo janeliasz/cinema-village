@@ -12,8 +12,11 @@ import {
   Typography,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useParams } from "react-router-dom";
 import { useReservation } from "./ReservationProvider";
-import { TicketType } from "./types";
+import { SeatType, TicketType } from "./types";
+import { useGetAvailableSeatsQuery } from "../../api/showsApi";
+import NoSeats from "../../components/NoSeats";
 
 export const ticketPrices = {
   [TicketType.Normal]: 26,
@@ -23,6 +26,10 @@ export const ticketPrices = {
 };
 
 function Tickets({ goNext }: { goNext: () => void }) {
+  const { id: showId } = useParams() as { id: string };
+
+  const { data: availableSeats } = useGetAvailableSeatsQuery(showId);
+
   const {
     selectedTickets,
     changeTicketType,
@@ -38,6 +45,23 @@ function Tickets({ goNext }: { goNext: () => void }) {
     TicketType.Student,
     TicketType.Senior,
   ].filter((type) => !selectedTypes.includes(type));
+
+  const selectedSeatTypes = {
+    [SeatType.Normal]: selectedTickets.reduce(
+      (acc, ticketType) =>
+        ticketType.type !== TicketType.Premium
+          ? acc + ticketType.numOfTickets
+          : acc,
+      0,
+    ),
+    [SeatType.Premium]: selectedTickets.reduce(
+      (acc, ticketType) =>
+        ticketType.type === TicketType.Premium
+          ? acc + ticketType.numOfTickets
+          : acc,
+      0,
+    ),
+  };
 
   const onTypeChange = (e: SelectChangeEvent<TicketType>, rowIdx: number) => {
     changeTicketType(rowIdx, e.target.value as TicketType);
@@ -64,6 +88,14 @@ function Tickets({ goNext }: { goNext: () => void }) {
         width: { xs: "95%", md: "50%" },
       }}
     >
+      {availableSeats &&
+        (selectedSeatTypes[SeatType.Normal] > availableSeats.normal ||
+          selectedSeatTypes[SeatType.Premium] > availableSeats.premium) && (
+          <Box sx={{ marginBottom: { xs: 2 } }}>
+            <NoSeats />
+          </Box>
+        )}
+
       <Grid container>
         <Grid
           item

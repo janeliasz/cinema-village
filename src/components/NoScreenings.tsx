@@ -2,8 +2,8 @@ import { Alert } from "@mui/material";
 
 function NoScreenings() {
   return (
-    <Alert severity="info" sx={{ marginTop: { xs: 2 } }}>
-      No screenings on this day.
+    <Alert severity="info">
+      Brak seansów wybranego dnia.
     </Alert>
   );
 }

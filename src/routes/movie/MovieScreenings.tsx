@@ -44,7 +44,10 @@ function MovieScreeningsTabPanel({
   return screenings ? (
     <Stack direction="row" spacing={2} justifyContent="center">
       {screenings.map((screening) => (
-        <Link key={screening.screeningId} to={`/reserve/${screening.screeningId}`}>
+        <Link
+          key={screening.screeningId}
+          to={`/reserve/${screening.screeningId}`}
+        >
           <Button variant="outlined" fullWidth sx={{ fontSize: "1rem" }}>
             {screening.time.slice(0, -3)}
           </Button>
@@ -52,7 +55,9 @@ function MovieScreeningsTabPanel({
       ))}
     </Stack>
   ) : (
-    <NoScreenings />
+    <Box sx={{ marginTop: { xs: 2 } }}>
+      <NoScreenings />
+    </Box>
   );
 }
 
