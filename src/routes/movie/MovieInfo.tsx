@@ -1,19 +1,12 @@
 import { Box, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useGetMovieByIdQuery } from "../../api/moviesApi";
+import { Movie, useGetMovieByIdQuery } from "../../api/moviesApi";
 
 function MovieInfo() {
   const { id } = useParams();
   const { isFetching, data } = useGetMovieByIdQuery(Number(id)) as {
     isFetching: boolean;
-    data: {
-      id: number;
-      title: string;
-      director: string;
-      overview: string;
-      releaseDate: string;
-      runtime: number;
-    };
+    data: Movie;
   };
 
   if (isFetching) {
@@ -36,7 +29,7 @@ function MovieInfo() {
             width: { xs: "100%", md: "30%" },
           }}
         >
-          <img src="https://fwcdn.pl/fpo/08/96/896/8029196.6.jpg" alt={data.title} width="100%" />
+          <img src={data.posterPath} alt={data.title} width="100%" />
         </Box>
         <Box sx={{ width: { xs: "100%", md: "60%" } }}>
           <Typography
