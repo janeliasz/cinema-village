@@ -3,7 +3,7 @@ import { Box, Container, Step, StepLabel, Stepper } from "@mui/material";
 
 import Tickets from "./Tickets";
 import PersonalInfo from "./PersonalInfo";
-import Places from "./Places";
+import Seats from "./Seats";
 import ReservationProvider from "./ReservationProvider";
 
 const steps = [
@@ -22,7 +22,7 @@ function Reserve() {
       case 0:
         return <Tickets goNext={goNext} />;
       case 1:
-        return <Places goPrev={goPrev} goNext={goNext} />;
+        return <Seats goPrev={goPrev} goNext={goNext} />;
       case 2:
         return <PersonalInfo goPrev={goPrev} />;
       default:

@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+.screen {
+  width: 80%;
+  height: 4rem;
+  background-color: #F2F2F2;
+  color: #112a46;
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 4rem;
+  margin: 0 auto 3rem;
+  font-family: "Inter", sans-serif;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.row.row-shift * {
+  transform: translateX(1.625rem);
+}
+
+.seat {
+  display: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.seat-label {
+  display: block;
+  width: 3rem;
+  height: 3rem;
+  background-color: #d9d9d9;
+  color: #112a46;
+  font-family: "Inter", sans-serif;
+  text-align: center;
+  line-height: 3rem;
+  cursor: pointer;
+}
+
+.seat-label.seat-selected {
+  background-color: #158cf4;
+  color: #f5f3f5;
+}
+
+.seat-label.seat-reserved {
+  background-color: #d32f2f;
+  color: #f5f3f5;
+  cursor: default;
+}
+
+.seat-label.seat-premium {
+  background-color: #2e7d32;
+  color: #f5f3f5;
+}
+
+.empty-space {
+  width: 3rem;
+  height: 3rem;
+}
