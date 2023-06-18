@@ -12,6 +12,8 @@ function ReservationProvider({ children }: { children: React.ReactNode }) {
   ]);
 
   const changeTicketType = (rowIdx: number, type: TicketType) => {
+    setSelectedSeats([]);
+
     dispatch({
       type: TicketsActions.CHANGE_TYPE,
       payload: { rowIdx, type },
@@ -19,6 +21,8 @@ function ReservationProvider({ children }: { children: React.ReactNode }) {
   };
 
   const changeNumOfTickets = (rowIdx: number, numOfTickets: number) => {
+    setSelectedSeats([]);
+
     dispatch({
       type: TicketsActions.CHANGE_NUM_OF_TICKETS,
       payload: { rowIdx, numOfTickets },
@@ -26,10 +30,14 @@ function ReservationProvider({ children }: { children: React.ReactNode }) {
   };
 
   const addTicketType = (type: TicketType) => {
+    setSelectedSeats([]);
+
     dispatch({ type: TicketsActions.ADD_TYPE, ticketType: type });
   };
 
   const removeTicketType = (type: TicketType) => {
+    setSelectedSeats([]);
+
     dispatch({ type: TicketsActions.REMOVE_TYPE, ticketType: type });
   };
 

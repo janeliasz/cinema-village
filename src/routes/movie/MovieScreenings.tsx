@@ -2,8 +2,21 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Box, Button, Stack } from "@mui/material";
 import DaysTabs, { nextDays } from "../../components/DaysTabs";
-import { ShowDate } from "../../api/showsApi";
-import { screenings } from "../shows/Shows";
+
+const screenings = [
+  {
+    id: 1,
+    time: "12:00",
+  },
+  {
+    id: 2,
+    time: "14:00",
+  },
+  {
+    id: 3,
+    time: "16:00",
+  },
+];
 
 function MovieScreenings({ movieId }: { movieId: number }) {
   const [openDayTab, setOpenDayTab] = useState(0);
@@ -26,7 +39,7 @@ function MovieScreeningsTabPanel({
   date,
 }: {
   movieId: number;
-  date: ShowDate;
+  date: string;
 }) {
   return (
     <>
@@ -39,7 +52,7 @@ function MovieScreeningsTabPanel({
           </Link>
         ))}
       </Stack>
-      {movieId}, {date.day}, {date.month}, {date.year}
+      {movieId}, {date}
     </>
   );
 }

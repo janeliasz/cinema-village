@@ -10,8 +10,10 @@ import {
   Stack,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { ShowDate, useGetShowsByDateQuery } from "../../api/showsApi";
+import { useGetShowsByDateQuery } from "../../api/showsApi";
 import DaysTabs, { nextDays } from "../../components/DaysTabs";
+import { Movie } from "../../api/moviesApi";
+import NoScreenings from "../../components/NoScreenings";
 
 function Shows() {
   const [openDayTab, setOpenDayTab] = useState(0);
@@ -33,47 +35,20 @@ function Shows() {
   );
 }
 
-export const screenings = [
-  {
-    id: 1,
-    time: "12:00",
-  },
-  {
-    id: 2,
-    time: "14:00",
-  },
-  {
-    id: 3,
-    time: "16:00",
-  },
-];
-
-function ShowsTabPanel({ date }: { date: ShowDate }) {
+function ShowsTabPanel({ date }: { date: string }) {
   const { isFetching, data } = useGetShowsByDateQuery(date) as {
     isFetching: boolean;
-    data: {
-      products: {
-        id: number;
-        title: string;
-        description: string;
-        brand: string;
-        category: string;
-        stock: number;
-        price: number;
-        images: string[];
-      }[];
-    };
+    data: (Movie & { screenings: { screeningId: number; time: string }[] })[];
   };
 
-  const products = data?.products;
-
   const today = new Intl.DateTimeFormat("pl-PL", { dateStyle: "full" }).format(
-    new Date(date.year, date.month, date.day),
+    new Date(date),
   );
 
   if (isFetching) {
     return <div>fetching...</div>;
   }
+
   return (
     <Box
       sx={{
@@ -86,9 +61,9 @@ function ShowsTabPanel({ date }: { date: ShowDate }) {
       >
         {today.toUpperCase()}
       </Typography>
-      {products.map((product) => (
+      {data.map(({ screenings, ...movie }) => (
         <Card
-          key={product.id}
+          key={movie.id}
           sx={{
             marginTop: { xs: 4, md: 7 },
             width: "100%",
@@ -98,9 +73,9 @@ function ShowsTabPanel({ date }: { date: ShowDate }) {
           }}
           raised
         >
-          <Link to={`/movies/${product.id}`}>
+          <Link to={`/movies/${movie.id}`}>
             <CardMedia
-              src={product.images[0]}
+              src={movie.posterPath}
               component="img"
               sx={{
                 width: { xs: "50vw", md: "12rem" },
@@ -121,7 +96,7 @@ function ShowsTabPanel({ date }: { date: ShowDate }) {
           >
             <Box sx={{ width: { xs: "100%", md: "70%" } }}>
               <Link
-                to={`/movies/${product.id}`}
+                to={`/movies/${movie.id}`}
                 style={{ color: "inherit", textDecoration: "none" }}
               >
                 <Typography
@@ -129,32 +104,32 @@ function ShowsTabPanel({ date }: { date: ShowDate }) {
                   fontSize="1.75rem"
                   sx={{ marginBottom: { xs: 1, md: 3 } }}
                 >
-                  {product.title}
+                  {movie.title}
                 </Typography>
               </Link>
               <Typography variant="subtitle1" fontSize="0.875rem">
-                GATUNEK: {product.category}
+                REŻYSERIA: {movie.director}
               </Typography>
               <Typography variant="subtitle1" fontSize="0.875rem">
-                WIEK: {product.stock}
+                ROK: {movie.releaseDate.substring(0, 4)}
               </Typography>
               <Typography variant="subtitle1" fontSize="0.875rem">
-                CZAS: {product.price} MIN
-              </Typography>
-              <Typography variant="subtitle1" fontSize="0.875rem">
-                PRODUKCJA: {product.category}
+                CZAS: {movie.runtime} MIN
               </Typography>
               <Typography
                 variant="body1"
                 fontSize="0.875rem"
                 sx={{ marginTop: { xs: 1, md: 3 } }}
               >
-                {product.description}
+                {movie.overview}
               </Typography>
             </Box>
             <Stack sx={{ width: { xs: "100%", md: "30%" } }} spacing={2}>
               {screenings.map((screening) => (
-                <Link key={screening.id} to={`/reserve/${screening.id}`}>
+                <Link
+                  key={screening.screeningId}
+                  to={`/reserve/${screening.screeningId}`}
+                >
                   <Button
                     variant="outlined"
                     fullWidth
@@ -168,6 +143,7 @@ function ShowsTabPanel({ date }: { date: ShowDate }) {
           </CardContent>
         </Card>
       ))}
+      {data.length === 0 && <NoScreenings />}
     </Box>
   );
 }

@@ -1,14 +1,9 @@
 import { Tab, Tabs, useMediaQuery, useTheme } from "@mui/material";
-import { ShowDate } from "../api/showsApi";
 
-const getNextDays = (numOfDays: number): ShowDate[] =>
+const getNextDays = (numOfDays: number): string[] =>
   Array.from(Array(numOfDays).keys()).map((n) => {
     const day = new Date(new Date().getTime() + n * (24 * 60 * 60 * 1000));
-    return {
-      year: day.getFullYear(),
-      month: day.getMonth(),
-      day: day.getDate(),
-    };
+    return day.toISOString().split("T")[0];
   });
 
 export const nextDays = getNextDays(7);
@@ -33,10 +28,10 @@ function DaysTabs({
       allowScrollButtonsMobile
       centered={!isSmallScreen}
     >
-      {nextDays.map((day: ShowDate) => (
+      {nextDays.map((day) => (
         <Tab
-          key={day.day}
-          label={`${day.day}.${day.month + 1}.${day.year}`}
+          key={day}
+          label={day.split("-").reverse().join(".")}
           sx={{ fontSize: "1rem" }}
         />
       ))}
