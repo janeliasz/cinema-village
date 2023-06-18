@@ -1,9 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+.screen {
+  width: 80%;
+  height: 4rem;
+  background-color: #F2F2F2;
+  color: #112a46;
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 4rem;
+  margin: 0 auto 3rem;
+  font-family: "Inter", sans-serif;
 }
 
 .row {
@@ -28,9 +39,9 @@
   display: block;
   width: 3rem;
   height: 3rem;
-  background-color: #dbd4d3;
+  background-color: #d9d9d9;
   color: #112a46;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   text-align: center;
   line-height: 3rem;
   cursor: pointer;

@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import React from "react";
 import { useGetRoomByIdQuery } from "../../api/roomsApi";
 import { Room, SeatType } from "./types";
@@ -29,8 +29,11 @@ function Places({
       }}
     >
       <div>
+        <div className="screen">EKRAN</div>
+
         {data.rows.map((row) => {
           let prevSeatPos = 0;
+
           return (
             <div
               key={`row${row.rowNumber}`}
@@ -82,15 +85,19 @@ function Places({
           );
         })}
       </div>
-      <div>
-        <button type="button" onClick={goPrev}>
-          prev
-        </button>
-        places
-        <button type="button" onClick={goNext}>
-          next
-        </button>
-      </div>
+      <Stack
+        direction="row"
+        justifyContent="flex-end"
+        spacing={1}
+        sx={{ marginTop: { xs: "2rem" } }}
+      >
+        <Button variant="outlined" onClick={goPrev}>
+          WSTECZ
+        </Button>
+        <Button variant="contained" onClick={goNext}>
+          Dalej
+        </Button>
+      </Stack>
     </Box>
   );
 }
