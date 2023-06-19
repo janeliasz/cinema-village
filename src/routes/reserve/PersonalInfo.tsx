@@ -14,6 +14,7 @@ import { useReservation } from "./ReservationProvider";
 import { ticketPrices } from "./Tickets";
 import { useSnackbar } from "../../components/snackbar/SnackbarProvider";
 import { useReserveMutation } from "../../api/showsApi";
+import { useGlobalLoading } from "../../components/global-loading/GlobalLoadingProvider";
 
 function PersonalInfo({ goPrev }: { goPrev: () => void }) {
   const { id: showId } = useParams() as { id: string };
@@ -23,7 +24,9 @@ function PersonalInfo({ goPrev }: { goPrev: () => void }) {
 
   const { personalInfo, setPersonalInfo, selectedTickets, selectedSeats } =
     useReservation();
+
   const notify = useSnackbar();
+  const setGlobalLoading = useGlobalLoading();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -37,6 +40,8 @@ function PersonalInfo({ goPrev }: { goPrev: () => void }) {
     // eslint-disable-next-line no-console
     console.log("reserving: ", showId, personalInfo, selectedTickets);
 
+    setGlobalLoading(true);
+
     const reservationResult = (await reserve({
       screeningId: Number(showId),
       rowNumber: selectedSeats[0].rowNumber,
@@ -48,6 +53,8 @@ function PersonalInfo({ goPrev }: { goPrev: () => void }) {
         phoneNumber: personalInfo.phone,
       },
     })) as { error: { originalStatus: number } };
+
+    setGlobalLoading(false);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     reservationResult.error.originalStatus === 200

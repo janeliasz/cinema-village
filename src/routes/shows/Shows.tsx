@@ -8,6 +8,7 @@ import {
   Typography,
   Button,
   Stack,
+  CircularProgress,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useGetShowsByDateQuery } from "../../api/showsApi";
@@ -46,7 +47,11 @@ function ShowsTabPanel({ date }: { date: string }) {
   );
 
   if (isFetching) {
-    return <div>fetching...</div>;
+    return (
+      <Box display="flex" justifyContent="center">
+        <CircularProgress size={100} />
+      </Box>
+    );
   }
 
   return (

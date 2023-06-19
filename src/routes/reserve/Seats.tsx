@@ -1,4 +1,4 @@
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button, CircularProgress, Stack } from "@mui/material";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useGetRoomByIdQuery, useGetShowByIdQuery } from "../../api/showsApi";
@@ -48,7 +48,7 @@ function RoomSchema() {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const { data: schema, isFetching } = useGetRoomByIdQuery(
+  const { data: schema } = useGetRoomByIdQuery(
     { roomId: show?.room.id || -1, screeningId: show?.id || -1 },
     {
       skip: !show,
@@ -89,8 +89,12 @@ function RoomSchema() {
     0,
   );
 
-  if (!schema || isFetching) {
-    return <div>fetching...</div>;
+  if (!schema) {
+    return (
+      <Box display="flex" justifyContent="center">
+        <CircularProgress size={100} />
+      </Box>
+    );
   }
 
   return (

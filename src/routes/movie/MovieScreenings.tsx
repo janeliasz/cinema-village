@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button, CircularProgress, Stack } from "@mui/material";
 import DaysTabs, { nextDays } from "../../components/DaysTabs";
 import { useGetShowsByDateQuery } from "../../api/showsApi";
 import { Movie } from "../../api/moviesApi";
@@ -38,7 +38,11 @@ function MovieScreeningsTabPanel({
   const screenings = data?.find((movie) => movie.id === movieId)?.screenings;
 
   if (isFetching) {
-    return <div>fetching...</div>;
+    return (
+      <Box display="flex" justifyContent="center">
+        <CircularProgress size={100} />
+      </Box>
+    );
   }
 
   return screenings ? (

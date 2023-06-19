@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { Movie, useGetMovieByIdQuery } from "../../api/moviesApi";
 
@@ -10,7 +10,11 @@ function MovieInfo() {
   };
 
   if (isFetching) {
-    return <div>fetching...</div>;
+    return (
+      <Box display="flex" justifyContent="center">
+        <CircularProgress size={100} />
+      </Box>
+    );
   }
 
   return (
