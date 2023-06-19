@@ -63,18 +63,6 @@ export type SeatsAvailability = {
   premium: number;
 };
 
-export type ReservationRequest = {
-  screeningId: number;
-  rowNumber: number;
-  seatNumber: number;
-  personalInfo: {
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    email: string;
-  };
-};
-
 export type Show = {
   id: number;
   movie: Movie;

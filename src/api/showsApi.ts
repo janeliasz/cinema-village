@@ -1,5 +1,16 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ReservationRequest, Room, SeatsAvailability, Show } from "../types";
+import { Room, SeatsAvailability, SelectedSeat, Show } from "../types";
+
+type ReservationRequest = {
+  screeningId: number;
+  seatProperties: SelectedSeat[];
+  personalInfo: {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    email: string;
+  };
+};
 
 export const showsApi = createApi({
   reducerPath: "shows",

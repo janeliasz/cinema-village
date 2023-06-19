@@ -44,8 +44,7 @@ function PersonalInfo({ goPrev }: { goPrev: () => void }) {
 
     const reservationResult = (await reserve({
       screeningId: Number(showId),
-      rowNumber: selectedSeats[0].rowNumber,
-      seatNumber: selectedSeats[0].seatNumber,
+      seatProperties: selectedSeats,
       personalInfo: {
         firstName: personalInfo.name,
         lastName: personalInfo.surname,
