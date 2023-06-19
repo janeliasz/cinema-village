@@ -16,7 +16,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  line-height: 3rem;
+  line-height: 2.5rem;
   font-family: "Inter", sans-serif;
 }
 
@@ -31,7 +31,7 @@
 .row.row-shift .empty-space,
 .row.row-shift .seat,
 .row.row-shift .seat-label {
-  transform: translateX(1.625rem);
+  transform: translateX(1.5rem);
 }
 
 .seat {
@@ -40,13 +40,13 @@
 
 .seat-label {
   display: block;
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   background-color: #d9d9d9;
   color: #112a46;
   font-family: "Inter", sans-serif;
   text-align: center;
-  line-height: 3rem;
+  line-height: 2.5rem;
   cursor: pointer;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -54,8 +54,8 @@
   user-select: none;
 }
 
-.seat-label.seat-selected {
-  background-color: #158cf4;
+.seat-label.seat-premium {
+  background-color: #2e7d32;
   color: #f5f3f5;
 }
 
@@ -64,8 +64,8 @@
   color: #f5f3f5;
 }
 
-.seat-label.seat-premium {
-  background-color: #2e7d32;
+.seat-label.seat-selected {
+  background-color: #158cf4;
   color: #f5f3f5;
 }
 
@@ -74,8 +74,8 @@
 }
 
 .empty-space {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .legend {
@@ -95,4 +95,36 @@
 .legend-item div {
   width: 1.75rem;
   height: 1.75rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .row-number {
+    display: none;
+  }
+
+  .row {
+    gap: 0.2rem
+  }
+
+  .row.row-shift .empty-space,
+  .row.row-shift .seat,
+  .row.row-shift .seat-label {
+    transform: translateX(0.7rem);
+  }
+
+  .seat-label {
+    width: 1.2rem;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    font-size: 0.75rem;
+  }
+
+  .empty-space {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .legend {
+    flex-direction: column;
+  }
 }

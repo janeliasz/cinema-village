@@ -19,7 +19,8 @@ function Seats({ goPrev, goNext }: { goPrev: () => void; goNext: () => void }) {
   return (
     <Box
       sx={{
-        width: { xs: "95%", md: "90%" },
+        width: { xs: "95%" },
+        marginBottom: { xs: "50vh" },
       }}
     >
       <RoomSchema />
