@@ -22,7 +22,7 @@ export type ReservationRequest = {
 export type Show = {
   id: number;
   movie: Movie;
-  roomId: number;
+  room: Room;
   screeningTime: string;
 };
 
@@ -43,8 +43,9 @@ export const showsApi = createApi({
       query: (id) => `/screenings/${id}/available-seats`,
       providesTags: ["Rooms"],
     }),
-    getRoomById: builder.query<Room, number>({
-      query: (id) => `/rooms/${id}`,
+    getRoomById: builder.query<Room, { roomId: number; screeningId: number }>({
+      query: ({ roomId, screeningId }) =>
+        `/rooms/${roomId}/screening/${screeningId}`,
       providesTags: ["Rooms"],
     }),
     reserve: builder.mutation<unknown, ReservationRequest>({

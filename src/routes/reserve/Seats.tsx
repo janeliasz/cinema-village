@@ -1,10 +1,7 @@
 import { Box, Button, Stack } from "@mui/material";
 import React from "react";
 import { useParams } from "react-router-dom";
-import {
-  useGetRoomByIdQuery,
-  useGetShowByIdQuery,
-} from "../../api/showsApi";
+import { useGetRoomByIdQuery, useGetShowByIdQuery } from "../../api/showsApi";
 import { Room, SeatType, TicketType } from "./types";
 import { useReservation } from "./ReservationProvider";
 import "./seats.css";
@@ -51,9 +48,12 @@ function RoomSchema() {
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  const { data, isFetching } = useGetRoomByIdQuery(show?.roomId, {
-    skip: !show,
-  }) as {
+  const { data: schema, isFetching } = useGetRoomByIdQuery(
+    { roomId: show?.room.id || -1, screeningId: show?.id || -1 },
+    {
+      skip: !show,
+    },
+  ) as {
     isFetching: boolean;
     data: Room;
   };
@@ -71,7 +71,7 @@ function RoomSchema() {
 
   const normalSeatsPicked = selectedSeats.reduce(
     (acc, seat) =>
-      isSeatNormal(data, seat.rowNumber, seat.seatNumber) ? acc + 1 : acc,
+      isSeatNormal(schema, seat.rowNumber, seat.seatNumber) ? acc + 1 : acc,
     0,
   );
 
@@ -85,11 +85,11 @@ function RoomSchema() {
 
   const premiumSeatsPicked = selectedSeats.reduce(
     (acc, seat) =>
-      !isSeatNormal(data, seat.rowNumber, seat.seatNumber) ? acc + 1 : acc,
+      !isSeatNormal(schema, seat.rowNumber, seat.seatNumber) ? acc + 1 : acc,
     0,
   );
 
-  if (!data || isFetching) {
+  if (!schema || isFetching) {
     return <div>fetching...</div>;
   }
 
@@ -97,7 +97,7 @@ function RoomSchema() {
     <div>
       <div className="screen">EKRAN</div>
 
-      {data.rows.map((row) => {
+      {schema.rows.map((row) => {
         let prevSeatPos = 0;
 
         return (
