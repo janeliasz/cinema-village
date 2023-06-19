@@ -14,7 +14,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useParams } from "react-router-dom";
 import { useReservation } from "./ReservationProvider";
-import { SeatType, TicketType } from "./types";
+import { SeatType, TicketType } from "../../types";
 import { useGetAvailableSeatsQuery } from "../../api/showsApi";
 import NoSeats from "../../components/NoSeats";
 

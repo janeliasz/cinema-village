@@ -13,8 +13,8 @@ import {
 import { Link } from "react-router-dom";
 import { useGetShowsByDateQuery } from "../../api/showsApi";
 import DaysTabs, { nextDays } from "../../components/DaysTabs";
-import { Movie } from "../../api/moviesApi";
 import NoScreenings from "../../components/NoScreenings";
+import { Movie } from "../../types";
 
 function Shows() {
   const [openDayTab, setOpenDayTab] = useState(0);

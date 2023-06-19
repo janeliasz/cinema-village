@@ -2,7 +2,7 @@ import { Box, Button, CircularProgress, Stack } from "@mui/material";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useGetRoomByIdQuery, useGetShowByIdQuery } from "../../api/showsApi";
-import { Room, SeatType, TicketType } from "./types";
+import { Room, SeatType, TicketType } from "../../types";
 import { useReservation } from "./ReservationProvider";
 import "./seats.css";
 

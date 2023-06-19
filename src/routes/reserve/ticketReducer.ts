@@ -1,4 +1,4 @@
-import { SelectedTicketType, TicketType } from "./types";
+import { SelectedTicketType, TicketType } from "../../types";
 
 export enum TicketsActions {
   CHANGE_TYPE = "CHANGE_TYPE",

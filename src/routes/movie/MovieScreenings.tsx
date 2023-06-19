@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Box, Button, CircularProgress, Stack } from "@mui/material";
 import DaysTabs, { nextDays } from "../../components/DaysTabs";
 import { useGetShowsByDateQuery } from "../../api/showsApi";
-import { Movie } from "../../api/moviesApi";
 import NoScreenings from "../../components/NoScreenings";
+import { Movie } from "../../types";
 
 function MovieScreenings({ movieId }: { movieId: number }) {
   const [openDayTab, setOpenDayTab] = useState(0);

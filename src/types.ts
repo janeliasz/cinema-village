@@ -47,3 +47,37 @@ export type SelectedSeat = {
   rowNumber: number;
   seatNumber: number;
 }
+
+export type Movie = {
+  id: number;
+      title: string;
+      director: string;
+      overview: string;
+      releaseDate: string;
+      runtime: number;
+      posterPath: string;
+}
+
+export type SeatsAvailability = {
+  normal: number;
+  premium: number;
+};
+
+export type ReservationRequest = {
+  screeningId: number;
+  rowNumber: number;
+  seatNumber: number;
+  personalInfo: {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    email: string;
+  };
+};
+
+export type Show = {
+  id: number;
+  movie: Movie;
+  room: Room;
+  screeningTime: string;
+};

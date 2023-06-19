@@ -4,7 +4,7 @@ import {
   ReservationContext,
   ReservationContextType,
 } from "./ReservationContext";
-import { PersonalData, SelectedSeat, TicketType } from "./types";
+import { PersonalData, SelectedSeat, TicketType } from "../../types";
 
 function ReservationProvider({ children }: { children: React.ReactNode }) {
   const [selectedTickets, dispatch] = useReducer(ticketsReducer, [

@@ -1,6 +1,7 @@
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { Movie, useGetMovieByIdQuery } from "../../api/moviesApi";
+import { useGetMovieByIdQuery } from "../../api/moviesApi";
+import { Movie } from "../../types";
 
 function MovieInfo() {
   const { id } = useParams();

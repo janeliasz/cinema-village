@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { PersonalData, SelectedSeat, SelectedTicketType, TicketType } from "./types";
+import { PersonalData, SelectedSeat, SelectedTicketType, TicketType } from "../../types";
 
 export type ReservationContextType = {
   selectedTickets: SelectedTicketType[];
